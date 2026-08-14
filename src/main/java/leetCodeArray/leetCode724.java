@@ -3,27 +3,19 @@ package leetCodeArray;
 
 public class leetCode724 {
     public int pivotIndex(int[] nums) {
-        int[] sumLeft = new int[nums.length];
-        int[] sumRight = new int[nums.length];
-        int pivot = -1;
+        int sumLeft = 0;
+        int sumRight = 0;
 
-        sumLeft[0] = 0;
-        sumRight[nums.length - 1] = 0;
-
-        for(int i = 1; i < nums.length; i++){
-            sumLeft[i] = nums[i - 1] + sumLeft[i - 1];
+        for(int num:nums){
+            sumRight += num;
         }
-        for(int j = nums.length - 1 - 1; j >= 0; j--){
-            sumRight[j] = nums[j + 1] +  sumRight[j + 1];
-        }
-
-        for(int k = 0; k < nums.length; k++){
-            if(sumLeft[k] == sumRight[k]){
-                pivot = k;
-                break;
+        for(int i = 0; i < nums.length; i++){
+            if(sumLeft == sumRight - nums[i] - sumLeft){
+                return i;
+            }else{
+                sumLeft += nums[i];
             }
         }
-        return pivot;
-
+        return -1;
     }
 }
